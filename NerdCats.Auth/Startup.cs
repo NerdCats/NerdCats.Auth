@@ -5,6 +5,8 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using NerdCats.Auth.Lib.Db;
+    using NerdCats.Auth.Lib.Options;
 
     public class Startup
     {
@@ -16,14 +18,6 @@
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
-            if (env.IsDevelopment())
-            {
-                // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-
-                // TODO: Looks like this will be deprecated soon. Need to fix things here
-                builder.AddUserSecrets();
-            }
-
             Configuration = builder.Build();
         }
 
@@ -32,9 +26,20 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var databaseConfig = Configuration.GetSection("Database");
+            services.Configure<DatabaseOptions>(databaseConfig);
+
+            services.AddSingleton<IDbContext, DbContext>((provider) =>
+            {
+                var dbContext = new DbContext(databaseConfig["ConnectionString"], databaseConfig["DatabaseName"]);
+                return dbContext;
+            });
+
             services.AddIdentityWithMongoStores("mongodb://localhost/myDB");
             // Add framework services.
             services.AddMvc();
+            services.AddCors();
+            services.AddResponseCompression();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
