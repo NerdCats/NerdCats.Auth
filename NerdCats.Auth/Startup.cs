@@ -37,18 +37,22 @@
                 return dbContext;
             });
 
-            services.AddIdentityWithMongoStores(databaseConfig["ConnectionString"])
-                .AddDefaultTokenProviders();
+            //services.AddIdentityWithMongoStores(databaseConfig["ConnectionString"])
+            //    .AddDefaultTokenProviders();
 
             // Add framework services.
             services.AddMvc();
             services.AddCors();
             services.AddResponseCompression();
 
+            services.AddIdentity<IdentityUser, IdentityRole>();
             services.AddIdentityServer()
                 .AddTemporarySigningCredential()
+                .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryPersistedGrants()
-                .AddAspNetIdentity<IdentityUser>();
+                .AddInMemoryApiResources(Config.GetApiResources())
+                .AddInMemoryClients(Config.GetClients())
+                .AddTestUsers(Config.GetUsers());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
