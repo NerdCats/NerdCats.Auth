@@ -35,7 +35,7 @@
                 return dbContext;
             });
 
-            services.AddIdentityWithMongoStores("mongodb://localhost/myDB");
+            services.AddIdentityWithMongoStores(databaseConfig["ConnectionString"]);
             // Add framework services.
             services.AddMvc();
             services.AddCors();
