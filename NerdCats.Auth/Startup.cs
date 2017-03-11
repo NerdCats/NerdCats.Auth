@@ -7,6 +7,8 @@
     using Microsoft.Extensions.Logging;
     using NerdCats.Auth.Lib.Db;
     using NerdCats.Auth.Lib.Options;
+    using Microsoft.AspNetCore.Identity.MongoDB;
+    using IdentityServer4.AccessTokenValidation;
 
     public class Startup
     {
@@ -35,11 +37,18 @@
                 return dbContext;
             });
 
-            services.AddIdentityWithMongoStores(databaseConfig["ConnectionString"]);
+            services.AddIdentityWithMongoStores(databaseConfig["ConnectionString"])
+                .AddDefaultTokenProviders();
+
             // Add framework services.
             services.AddMvc();
             services.AddCors();
             services.AddResponseCompression();
+
+            services.AddIdentityServer()
+                .AddTemporarySigningCredential()
+                .AddInMemoryPersistedGrants()
+                .AddAspNetIdentity<IdentityUser>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
