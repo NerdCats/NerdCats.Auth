@@ -9,6 +9,7 @@
     using NerdCats.Auth.Lib.Options;
     using Microsoft.AspNetCore.Identity.MongoDB;
     using IdentityServer.Core.Services;
+    using IdentityServer.Core.Models;
 
     public class Startup
     {
@@ -37,15 +38,12 @@
                 return dbContext;
             });
 
-            //services.AddIdentityWithMongoStores(databaseConfig["ConnectionString"])
-            //    .AddDefaultTokenProviders();
+            services.AddIdentityWithMongoStoresUsingCustomTypes<ApplicationUser, IdentityRole>(databaseConfig["ConnectionString"])
+                .AddDefaultTokenProviders();
 
             // Add framework services.         
             services.AddCors();
             services.AddResponseCompression();
-
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddDefaultTokenProviders();
 
             services.AddMvc();
 
@@ -55,11 +53,11 @@
 
             services.AddIdentityServer()
                 .AddTemporarySigningCredential()
-                .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryPersistedGrants()
+                .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients())
-                .AddTestUsers(Config.GetUsers());
+                .AddAspNetIdentity<ApplicationUser>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,6 +69,7 @@
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
             }
             else
             {
@@ -81,6 +80,15 @@
 
             app.UseIdentity();
             app.UseIdentityServer();
+
+            // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
+            app.UseGoogleAuthentication(new GoogleOptions
+            {
+                AuthenticationScheme = "Google",
+                SignInScheme = "Identity.External", // this is the name of the cookie middleware registered by UseIdentity()
+                ClientId = "998042782978-s07498t8i8jas7npj4crve1skpromf37.apps.googleusercontent.com",
+                ClientSecret = "HsnwJri_53zn7VcO1Fm7THBb",
+            });
 
             app.UseMvc(routes =>
             {
