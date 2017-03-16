@@ -32,8 +32,7 @@ Turn straight to [IdentityServer4 samples](https://github.com/IdentityServer/Ide
 You bet!
 
 ### Okay, Im sold, how can I test?
- - Open the solution in Visual Studio 2017 (No, VS2015 won't work, divert your rants to MSFT pages, I can't help)
- - Open appsettings.json
+ - Open `NerdCats.Auth\appsettings.json`
  - Modify the `Database Configuration` like below:
  ```json
 "Database": {
@@ -41,5 +40,7 @@ You bet!
     "DatabaseName": "<your-database-name>"
     }
  ```
+ - run `dotnet restore`
+ - run `dotnet run`
 
 Please use same `DatabaseName` in both of the properties, its a known development wart for now. We'd fix it with time of course.
