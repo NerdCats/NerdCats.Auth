@@ -20,7 +20,13 @@ Yes
 
 ### How much work is done?
 Clients and Scopes are still fetched from in memory collection. Would change soon. We don't
-have an admin panel to control these yet since this is forked off the samples of IdentityServer4
+have an admin panel to control these yet since this is forked off the samples of IdentityServer4.
+
+### How much has been taken from IdentityServer4?
+A lot. You can see all of them under the IdentityServer.Core project.
+
+### What if I want to know more on how this works?
+Turn straight to [IdentityServer4 samples](https://github.com/IdentityServer/IdentityServer4.Samples). That is the best place to get yourself started.
 
 ### Will there be a docker container to test out in future?
 You bet!
