@@ -28,7 +28,7 @@ You bet!
 ### Okay, Im sold, how can I test?
  - Open the solution in Visual Studio 2017 (No, VS2015 won't work, divert your rants to MSFT pages, I can't help)
  - Open appsettings.json
- - Add a Database Configuration like below:
+ - Modify the `Database Configuration` like below:
  ```json
 "Database": {
     "ConnectionString": "mongodb://<mongodb-connection-string>/<your-database-name>",
