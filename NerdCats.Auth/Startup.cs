@@ -8,7 +8,6 @@
     using NerdCats.Auth.Lib.Db;
     using NerdCats.Auth.Lib.Options;
     using Microsoft.AspNetCore.Identity.MongoDB;
-    using IdentityServer4.AccessTokenValidation;
 
     public class Startup
     {
