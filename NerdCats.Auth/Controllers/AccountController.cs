@@ -7,24 +7,23 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using IdentityServerCore.Models;
-using IdentityServerCore.Models.AccountViewModels;
-using IdentityServerCore.Services;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Http.Authentication;
-using IdentityServer4.Quickstart.UI;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.MongoDB;
+using IdentityServer.Core.UI;
+using IdentityServer.Core.Models;
+using IdentityServer.Core.Services;
+using IdentityServer.Core.Models.AccountViewModels;
 
-namespace IdentityServerCore.Controllers
+namespace IdentityServerWithAspNetIdentity.Controllers
 {
     [Authorize]
     [SecurityHeaders]
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
@@ -407,6 +406,7 @@ namespace IdentityServerCore.Controllers
             {
                 return View("Error");
             }
+
             var userFactors = await _userManager.GetValidTwoFactorProvidersAsync(user);
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });

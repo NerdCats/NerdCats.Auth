@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace IdentityServerCore.Services
+namespace IdentityServer.Core.Services
 {
     public interface ISmsSender
     {

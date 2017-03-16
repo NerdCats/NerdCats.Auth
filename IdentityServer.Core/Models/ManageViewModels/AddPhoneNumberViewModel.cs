@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace IdentityServerCore.Models.ManageViewModels
+namespace IdentityServer.Core.Models.ManageViewModels
 {
     public class AddPhoneNumberViewModel
     {

@@ -4,11 +4,12 @@
 
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
+using IdentityServer.Core.UI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
-namespace IdentityServer4.Quickstart.UI
+namespace IdentityServer.Core.UI
 {
     /// <summary>
     /// This controller processes the consent UI
