@@ -52,7 +52,6 @@
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
             services.AddIdentityServer()
-                .AddTemporarySigningCredential()
                 .AddInMemoryPersistedGrants()
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
