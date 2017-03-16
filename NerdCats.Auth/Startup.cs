@@ -8,6 +8,7 @@
     using NerdCats.Auth.Lib.Db;
     using NerdCats.Auth.Lib.Options;
     using Microsoft.AspNetCore.Identity.MongoDB;
+    using IdentityServer.Core.Services;
 
     public class Startup
     {
@@ -39,12 +40,19 @@
             //services.AddIdentityWithMongoStores(databaseConfig["ConnectionString"])
             //    .AddDefaultTokenProviders();
 
-            // Add framework services.
-            services.AddMvc();
+            // Add framework services.         
             services.AddCors();
             services.AddResponseCompression();
 
-            services.AddIdentity<IdentityUser, IdentityRole>();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddDefaultTokenProviders();
+
+            services.AddMvc();
+
+            // Add application services.
+            services.AddTransient<IEmailSender, AuthMessageSender>();
+            services.AddTransient<ISmsSender, AuthMessageSender>();
+
             services.AddIdentityServer()
                 .AddTemporarySigningCredential()
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
@@ -76,7 +84,9 @@
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(name: "default", template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
