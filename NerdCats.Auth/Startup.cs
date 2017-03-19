@@ -10,6 +10,8 @@
     using Microsoft.AspNetCore.Identity.MongoDB;
     using IdentityServer.Core.Services;
     using IdentityServer.Core.Models;
+    using IdentityServer4.Stores;
+    using NerdCats.Auth.Lib;
 
     public class Startup
     {
@@ -41,6 +43,8 @@
             services.AddIdentityWithMongoStoresUsingCustomTypes<ApplicationUser, IdentityRole>(databaseConfig["ConnectionString"])
                 .AddDefaultTokenProviders();
 
+            services.AddSingleton<IClientStore, ClientStore>();
+
             // Add framework services.         
             services.AddCors();
             services.AddResponseCompression();
@@ -55,7 +59,7 @@
                 .AddInMemoryPersistedGrants()
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
-                .AddInMemoryClients(Config.GetClients())
+                //.AddInMemoryClients(Config.GetClients())
                 .AddAspNetIdentity<ApplicationUser>();
         }
 
