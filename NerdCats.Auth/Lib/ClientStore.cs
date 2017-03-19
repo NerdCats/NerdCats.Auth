@@ -19,9 +19,9 @@
             this.collection = dbContext.Clients;
         }
 
-        public Task<Client> FindClientByIdAsync(string clientId)
+        public async Task<Client> FindClientByIdAsync(string clientId)
         {
-            throw new NotImplementedException();
+            return await collection.Find(x => x.ClientId == clientId).FirstOrDefaultAsync();
         }
     }
 }
