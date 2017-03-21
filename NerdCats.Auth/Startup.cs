@@ -43,7 +43,7 @@
             services.AddIdentityWithMongoStoresUsingCustomTypes<ApplicationUser, IdentityRole>(databaseConfig["ConnectionString"])
                 .AddDefaultTokenProviders();
 
-            services.AddSingleton<IClientStore, ClientStore>();
+            // services.AddSingleton<IClientStore, ClientStore>();
 
             // Add framework services.         
             services.AddCors();
@@ -59,7 +59,7 @@
                 .AddInMemoryPersistedGrants()
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
-                //.AddInMemoryClients(Config.GetClients())
+                .AddInMemoryClients(Config.GetClients())
                 .AddAspNetIdentity<ApplicationUser>();
         }
 
