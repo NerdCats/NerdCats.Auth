@@ -28,3 +28,5 @@ script:
 
 after_script:
   docker build -t nerdcats/nerdcats-auth:latest .
+  docker login -u $DOCKER_DOCKER_USERNAME -p DOCKER_PASS
+  docker push nerdcats/nerdcats-auth:latest
