@@ -1,4 +1,4 @@
-# NerdCats.Auth
+# NerdCats.Auth [![Build Status](https://travis-ci.org/NerdCats/NerdCats.Auth.svg?branch=master)](https://travis-ci.org/NerdCats/NerdCats.Auth)
 A single sign on server implementation powered by IdentityServer4. Uses mongodb for storage and uses Asp.net Identity Core.
 
 ## Acknowldegements
