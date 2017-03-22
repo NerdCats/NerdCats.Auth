@@ -24,7 +24,7 @@ before_script:
   dotnet restore
 
 script:
-  dotnet build -c Release
+  dotnet publish -c Release
 
 after_script:
   docker build -t nerdcats/nerdcats-auth:latest .
