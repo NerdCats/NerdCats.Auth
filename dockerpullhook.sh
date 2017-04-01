@@ -1,0 +1,2 @@
+#!/bin/bash
+curl --request POST --url 'http://auth.nerdcats.co:8080/pull?token=nerdcats' --header 'content-type: application/json' --data '{"mode": "docker","image": "nerdcats/auth:prod", "arguments": "--name auth -p 80:5000"}'
