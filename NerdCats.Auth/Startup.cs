@@ -81,6 +81,11 @@
             }
 
             app.UseStaticFiles();
+            app.UseCors(
+                builder => builder
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin());
 
             app.UseIdentity();
             app.UseIdentityServer();
