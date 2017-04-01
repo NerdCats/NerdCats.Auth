@@ -1,5 +1,6 @@
 ﻿namespace NerdCats.Auth
 {
+    using IdentityServer4;
     using IdentityServer4.Models;
     using IdentityServer4.Test;
     using System.Collections.Generic;
@@ -12,6 +13,11 @@
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResources.Email(),
+                new IdentityResource {
+                    Name = "role",
+                    UserClaims = new List<string> { "role" }
+                }
             };
         }
 
@@ -20,6 +26,10 @@
             return new List<ApiResource>
             {
                 new ApiResource("datacat", "Datacat Api")
+                {
+                    Enabled = true,                  
+                    UserClaims = new List<string> { "role", "email", "profile", "name" }
+                }
             };
         }
 
@@ -39,7 +49,12 @@
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "datacat" }
+                    AllowedScopes = {
+                        "openid",
+                        "email",
+                        "profile",
+                        "datacat"
+                    }
 
                 },
                 new Client
